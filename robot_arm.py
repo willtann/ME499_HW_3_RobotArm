@@ -88,7 +88,10 @@ class RobotArm:
         plt.ylim(-sum(self.arm_lengths), sum(self.arm_lengths))
 
         """ Plot target"""
-        plt.scatter(target[0], target[1], c='red', marker='X')
+        if target:
+            plt.scatter(target[0], target[1], c='red', marker='X')
+        else:
+            return
 
         """Plot links"""
         lin = self.get_links(thetas)
