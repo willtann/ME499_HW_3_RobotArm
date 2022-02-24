@@ -87,8 +87,8 @@ class Link:
         self.end = end
 
     def __repr__(self):
-        return '<Link: ({:.3f}, {:.3f}) to ({:.3f}, {:.3f})>'.format(self.start[0], self.start[1],
-                                                                     self.end[0], self.end[1])
+        return '<Link: ({:.3f}, {:.3f}) to ({:.3f}, {:.3f})>'\
+               .format(self.start[0], self.start[1], self.end[0], self.end[1])
 
     def __str__(self):
         return self.__repr__()
@@ -96,8 +96,12 @@ class Link:
     def check_wall_collision(self, wall):
         if not isinstance(wall, VerticalWall):
             raise ValueError('Please input a valid Wall object to check for collision.')
-
-        raise NotImplementedError
+        else:
+            if self.start[0] < wall.loc < self.end[0]:  # x_link_START < x_wall < x_link_END
+                # Then the wall is intersecting the link
+                return True
+            else:
+                return False
 
 
 class VerticalWall:
@@ -116,10 +120,12 @@ class VerticalWall:
 if __name__ == '__main__':
     # Example of initializing a 3-link robot arm
     arm = RobotArm(1.2, 0.8, 0.5, obstacles=[VerticalWall(1.2)])
-    print(arm)
+    print('Robot Arm', arm)
 
     # Get the end-effector position of the arm for a given configuration
-    thetas = [np.pi / 4, np.pi / 2, -np.pi / 4]
+    # thetas = [np.pi / 4, np.pi / 2, -np.pi / 4]
+    # thetas = [np.pi / 2, 0, 0]  # Problem 1.2.1
+    thetas = [0, 0, np.pi]  # Problem 1.2.2
     pos = arm.get_ee_location(thetas)
     print('End effector is at: ({:.3f}, {:.3f})'.format(*pos))
 
@@ -128,5 +134,24 @@ if __name__ == '__main__':
 
     for i, link in enumerate(links):
         print('Link {}:'.format(i))
-        print('\tStart: ({:.3f}, {:.3f})'.format(*link.start))
-        print('\tEnd: ({:.3f}, {:.3f})'.format(*link.end))
+        # print('\tStart: ({:.3f}, {:.3f})'.format(*link.start))
+        # print('\tEnd: ({:.3f}, {:.3f})'.format(*link.end))
+
+    # Problem 1.1
+    # print('__________Problem 1.1__________')
+    # my_link = Link((1.1, 5.0), (3.0, 3.3))
+    # print('my_link (', my_link.start[0], ')(', my_link.end[0], ')')
+    #
+    # print('Vertical wall at x=2.1... collision = ', my_link.check_wall_collision(VerticalWall(2.1)))
+    # print('Vertical wall at x=-0.3... collision = ', my_link.check_wall_collision(VerticalWall(-0.3)))
+
+    # Problem 1.2
+    print('__________Problem 1.2__________')
+    my_arm = RobotArm(1, 1, 1, obstacles=[VerticalWall(1.5)])
+    my_arm.get_collision_score([np.pi/2, 0, 0])
+
+    # my_arm.get_collision_score([0, 0, np.pi])
+
+
+
+
