@@ -61,7 +61,7 @@ class RobotArm:
         return self.get_links(thetas)[-1].end
 
     def ik_grid_search(self, target, intervals):
-        raise NotImplementedError
+
 
     def ik_fmin_search(self, target, thetas_guess, max_calls=100):
         raise NotImplementedError
@@ -180,6 +180,10 @@ if __name__ == '__main__':
     print('__________Problem 2__________')
     your_arm = RobotArm(2, 1, 2, obstacles=[VerticalWall(3.2)])
     your_arm.plot_robot_state([0.2, 0.4, 0.6], target=[1.5, 1.5])
+
+    # Problem 3
+    print('__________Problem 3__________')
+    RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
 
     # Example of initializing a 3-link robot arm
     # arm = RobotArm(1.2, 0.8, 0.5, obstacles=[VerticalWall(1.2)])
