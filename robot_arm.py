@@ -103,16 +103,19 @@ class RobotArm:
                 tf = this_link.check_wall_collision(wall)
                 x = [this_link.start[0], this_link.end[0]]
                 y = [this_link.start[1], this_link.end[1]]
+                plt.scatter(x, y, color='black')
                 if tf:
-                    plt.plot(x, y, '--')
+                    plt.plot(x, y, '--', color='orange')
                 else:
-                    plt.plot(x, y, '-')
+                    plt.plot(x, y, '-', color='blue')
 
         """Plot wall(s)"""
         for w, wall in enumerate(walls):
             plt.vlines(wall.loc, -sum(self.arm_lengths), sum(self.arm_lengths), 'k')
-            plt.vlines(0, -sum(self.arm_lengths), sum(self.arm_lengths), linestyles='dotted')
-            plt.hlines(0, -sum(self.arm_lengths), sum(self.arm_lengths), linestyles='dotted')
+            plt.vlines(0, -sum(self.arm_lengths), sum(self.arm_lengths), linestyles='dotted', alpha=0.25)
+            plt.hlines(0, -sum(self.arm_lengths), sum(self.arm_lengths), linestyles='dotted', alpha=0.25)
+
+        """Saving file"""
         plt.savefig(filename)
 
 
