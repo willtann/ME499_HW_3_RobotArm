@@ -76,11 +76,19 @@ class RobotArm:
 
         for a, angle in enumerate(angles):  # Iterate through every set of angles
             if not self.get_collision_score(angle):  # If no collision
+                # This orientations' distance from target
                 endpoint = self.get_ee_location(angle)
-                dist.append(np.linalg.norm(endpoint - target))
+                my_dist = np.linalg.norm(endpoint - target)
+                dist.append(my_dist)
+
+                # This orientations' link angles
                 good_angles.append(angle)
 
-                return angle, np.linalg.norm(endpoint - target)
+                min_dist = np.min(dist)
+                min_dist_index = dist.index(min_dist)
+                # print(min_dist_index)
+
+        return good_angles[min_dist_index], min_dist
 
 
     def ik_fmin_search(self, target, thetas_guess, max_calls=100):
@@ -203,7 +211,7 @@ if __name__ == '__main__':
 
     # Problem 3
     print('__________Problem 3__________')
-    print(your_arm.ik_grid_search(7, 10))
+    print(your_arm.ik_grid_search([-3.53576672 -0.524667 ], 7))
     # RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
 
     # Example of initializing a 3-link robot arm
