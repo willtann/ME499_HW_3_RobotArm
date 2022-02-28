@@ -84,7 +84,7 @@ class RobotArm:
                 output = (good_angles, np.linalg.norm(endpoint - target))
                 # indexes = np.argsort(dist_end)
                 # ordered_angles = good_angles[indexes]
-            return output
+                return print(','.join((output)))
 
 
 
@@ -141,7 +141,7 @@ class RobotArm:
             plt.hlines(0, -sum(self.arm_lengths), sum(self.arm_lengths), linestyles='dotted', alpha=0.25)
 
         """Saving file"""
-        plt.savefig(filename)
+        plt.savefig('{}'.format(filename))
 
 
 class Link:
@@ -208,7 +208,7 @@ if __name__ == '__main__':
 
     # Problem 3
     print('__________Problem 3__________')
-    # print(your_arm.ik_grid_search(7, 10))
+    print(your_arm.ik_grid_search(7, 10))
     # RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
 
     # Example of initializing a 3-link robot arm
