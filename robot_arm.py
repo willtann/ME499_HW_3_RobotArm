@@ -94,7 +94,11 @@ class RobotArm:
             my_dist = np.linalg.norm(endpoint - target)
             return my_dist
 
-        return optimize.fmin(func=dist, x0=self.get_ee_location(thetas_guess), maxfun=max_calls)
+        min_thetas = optimize.fmin(func=dist, x0=thetas_guess, maxfun=max_calls)
+        min_dist = dist(min_thetas)
+        return (min_thetas[0], min_thetas[1] ,min_thetas[2]), min_dist
+
+
 
     def get_collision_score(self, thetas):
         lin = self.get_links(thetas)
