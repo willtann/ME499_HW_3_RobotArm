@@ -140,7 +140,7 @@ class RobotArm:
             plt.hlines(0, -sum(self.arm_lengths), sum(self.arm_lengths), linestyles='dotted', alpha=0.25)
 
         """Saving file"""
-        plt.savefig('filename')
+        plt.savefig(filename)
 
 
 class Link:
@@ -186,28 +186,28 @@ class VerticalWall:
         return '<VerticalWall at x={:.3f}>'.format(self.loc)
 
 
-# if __name__ == '__main__':
-#     # Problem 1.1
-#     print('__________Problem 1.1__________')
-#     my_link = Link((1.1, 5.0), (3.0, 3.3))
-#     print('my_link (', my_link.start[0], ',', my_link.end[0], ')')
-#     print('Vertical wall at x=2.1... collision = ', my_link.check_wall_collision(VerticalWall(2.1)))
-#     print('Vertical wall at x=-0.3... collision = ', my_link.check_wall_collision(VerticalWall(-0.3)))
-#
-#     # Problem 1.2
-#     print('__________Problem 1.2__________')
-#     my_arm = RobotArm(1, 1, 1, obstacles=[VerticalWall(1.5)])
-#     print('Number of collisions', my_arm.get_collision_score([np.pi/2, 0, 0]))
-#     print('Number of collisions', my_arm.get_collision_score([0, 0, np.pi]))
-#
-#     # Problem 2
-#     print('__________Problem 2__________')
-#     your_arm = RobotArm(2, 1, 2, obstacles=[VerticalWall(3.2)])
-#     your_arm.plot_robot_state([0.2, 0.4, 0.6], target=[1.5, 1.5])
-#
-#     # Problem 3
-#     print('__________Problem 3__________')
-#     print(your_arm.ik_grid_search(7, 4))
+if __name__ == '__main__':
+    # Problem 1.1
+    print('__________Problem 1.1__________')
+    my_link = Link((1.1, 5.0), (3.0, 3.3))
+    print('my_link (', my_link.start[0], ',', my_link.end[0], ')')
+    print('Vertical wall at x=2.1... collision = ', my_link.check_wall_collision(VerticalWall(2.1)))
+    print('Vertical wall at x=-0.3... collision = ', my_link.check_wall_collision(VerticalWall(-0.3)))
+
+    # Problem 1.2
+    print('__________Problem 1.2__________')
+    my_arm = RobotArm(1, 1, 1, obstacles=[VerticalWall(1.5)])
+    print('Number of collisions', my_arm.get_collision_score([np.pi/2, 0, 0]))
+    print('Number of collisions', my_arm.get_collision_score([0, 0, np.pi]))
+
+    # Problem 2
+    print('__________Problem 2__________')
+    your_arm = RobotArm(2, 1, 2, obstacles=[VerticalWall(3.2)])
+    your_arm.plot_robot_state([0.2, 0.4, 0.6], target=[1.5, 1.5])
+
+    # Problem 3
+    print('__________Problem 3__________')
+    print(your_arm.ik_grid_search(7, 4))
     # RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
 
     # Example of initializing a 3-link robot arm
