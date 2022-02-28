@@ -81,10 +81,10 @@ class RobotArm:
                 # print(dist_end)
                 good_angles.append(angle)
                 # print(good_angles)
-                output = (good_angles, np.linalg.norm(endpoint - target))
+                output = (str(good_angles)[1:-1], np.linalg.norm(endpoint - target))
                 # indexes = np.argsort(dist_end)
                 # ordered_angles = good_angles[indexes]
-                return print(','.join((output)))
+                return output
 
 
 
@@ -141,7 +141,7 @@ class RobotArm:
             plt.hlines(0, -sum(self.arm_lengths), sum(self.arm_lengths), linestyles='dotted', alpha=0.25)
 
         """Saving file"""
-        plt.savefig('{}'.format(filename))
+        plt.savefig(filename)
 
 
 class Link:
