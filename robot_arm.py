@@ -1,5 +1,5 @@
 import itertools
-
+from scipy import optimize
 import numpy as np
 import matplotlib.pyplot as plt
 """
@@ -89,7 +89,8 @@ class RobotArm:
 
 
     def ik_fmin_search(self, target, thetas_guess, max_calls=100):
-        raise NotImplementedError
+        return optimize.fmin(self.ik_grid_search, 1)
+
 
     def get_collision_score(self, thetas):
         lin = self.get_links(thetas)
@@ -115,8 +116,6 @@ class RobotArm:
         """ Plot target"""
         if target:
             plt.scatter(target[0], target[1], c='red', marker='X')
-        else:
-            return
 
         """Plot links"""
         lin = self.get_links(thetas)
@@ -141,7 +140,7 @@ class RobotArm:
             plt.hlines(0, -sum(self.arm_lengths), sum(self.arm_lengths), linestyles='dotted', alpha=0.25)
 
         """Saving file"""
-        plt.savefig(filename)
+        return plt.savefig(filename)
 
 
 class Link:
@@ -204,11 +203,13 @@ if __name__ == '__main__':
     # Problem 2
     print('__________Problem 2__________')
     your_arm = RobotArm(2, 1, 2, obstacles=[VerticalWall(3.2)])
-    your_arm.plot_robot_state([0.2, 0.4, 0.6], target=[1.5, 1.5], filename='Testing.png')
+    your_arm.plot_robot_state([0.2, 0.4, 0.6], target=[1.5, 1.5])
 
     # Problem 3
     print('__________Problem 3__________')
-    print(your_arm.ik_grid_search([-3.53576672 -0.524667 ], 7))
+    print(your_arm.ik_grid_search([-3.53576672 -0.524667], 7))
+    print(your_arm.ik_fmin_search([-3.53576672 -0.524667],
+                                  (3.5903916041026207, 0.0, 0.8975979010256552)))
     # RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
 
     # Example of initializing a 3-link robot arm
