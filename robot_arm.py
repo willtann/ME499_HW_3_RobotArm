@@ -84,7 +84,7 @@ class RobotArm:
                 output = (str(good_angles)[1:-1], np.linalg.norm(endpoint - target))
                 # indexes = np.argsort(dist_end)
                 # ordered_angles = good_angles[indexes]
-                return output
+                return str(output)
 
 
 
