@@ -1,6 +1,11 @@
+import itertools
+
 import numpy as np
 import matplotlib.pyplot as plt
-
+"""
+References:
+    [1]: https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
+"""
 
 class RobotArm:
 
@@ -61,6 +66,24 @@ class RobotArm:
         return self.get_links(thetas)[-1].end
 
     def ik_grid_search(self, target, intervals):
+        num_links = len(self.arm_lengths)  # How many links are there
+        n_searched = intervals ** num_links  # Number of points searched
+        angles = np.linspace(0, 2*np.pi, num=intervals, endpoint=False)  # [1]
+        angles = itertools.product(angles, repeat=num_links)
+        angles = np.array(list(angles))
+        dist_end = []
+        good_links = []
+        good_angles = []
+        ret = []
+        for a, angle in enumerate(angles):
+            #  If no collision
+            if not self.get_collision_score(angle):
+                endpoint = self.get_ee_location(angle)
+                dist_end.append(np.linalg.norm(endpoint - target))
+                good_angles.append(angle)
+                # good_links.append(self.get_links(angle))
+
+                return good_angles, dist_end
 
 
     def ik_fmin_search(self, target, thetas_guess, max_calls=100):
@@ -183,7 +206,8 @@ if __name__ == '__main__':
 
     # Problem 3
     print('__________Problem 3__________')
-    RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
+    print(your_arm.ik_grid_search(7, 4))
+    # RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
 
     # Example of initializing a 3-link robot arm
     # arm = RobotArm(1.2, 0.8, 0.5, obstacles=[VerticalWall(1.2)])
