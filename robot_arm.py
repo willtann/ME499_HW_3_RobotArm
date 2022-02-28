@@ -72,18 +72,19 @@ class RobotArm:
         angles = itertools.product(angles, repeat=num_links)
         angles = np.array(list(angles))
         dist_end = []
-        good_links = []
         good_angles = []
-        ret = []
         for a, angle in enumerate(angles):
             #  If no collision
             if not self.get_collision_score(angle):
                 endpoint = self.get_ee_location(angle)
                 dist_end.append(np.linalg.norm(endpoint - target))
+                # print(dist_end)
                 good_angles.append(angle)
-                # good_links.append(self.get_links(angle))
-
-                return good_angles, dist_end
+                print(good_angles)
+                output = (np.array(angle), np.linalg.norm(endpoint - target))
+        indexes = np.argsort(dist_end)
+        ordered_angles = good_angles[indexes]
+        return ordered_angles
 
 
     def ik_fmin_search(self, target, thetas_guess, max_calls=100):
@@ -139,7 +140,7 @@ class RobotArm:
             plt.hlines(0, -sum(self.arm_lengths), sum(self.arm_lengths), linestyles='dotted', alpha=0.25)
 
         """Saving file"""
-        plt.savefig(filename)
+        plt.savefig('filename')
 
 
 class Link:
