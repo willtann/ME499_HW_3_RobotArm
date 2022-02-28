@@ -70,21 +70,21 @@ class RobotArm:
         n_searched = intervals ** num_links  # Number of points searched
         angles = np.linspace(0, 2*np.pi, num=intervals, endpoint=False)  # [1]
         angles = itertools.product(angles, repeat=num_links)
-        angles = np.array(list(angles))
+        angles = list(angles)
         dist_end = []
         good_angles = []
-        for a, angle in enumerate(angles):
-            #  If no collision
-            if not self.get_collision_score(angle):
+
+        for a, angle in enumerate(angles):  # Iterate through every set of angles
+            if not self.get_collision_score(angle):  # If no collision
                 endpoint = self.get_ee_location(angle)
                 dist_end.append(np.linalg.norm(endpoint - target))
                 # print(dist_end)
                 good_angles.append(angle)
-                print(good_angles)
-                output = (np.array(angle), np.linalg.norm(endpoint - target))
-        indexes = np.argsort(dist_end)
-        ordered_angles = good_angles[indexes]
-        return ordered_angles
+                # print(good_angles)
+                output = (good_angles, np.linalg.norm(endpoint - target))
+        # indexes = np.argsort(dist_end)
+        # ordered_angles = good_angles[indexes]
+        return output
 
 
     def ik_fmin_search(self, target, thetas_guess, max_calls=100):
@@ -207,7 +207,7 @@ if __name__ == '__main__':
 
     # Problem 3
     print('__________Problem 3__________')
-    print(your_arm.ik_grid_search(7, 4))
+    print(your_arm.ik_grid_search(7, 10))
     # RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
 
     # Example of initializing a 3-link robot arm
