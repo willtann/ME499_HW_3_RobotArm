@@ -7,6 +7,7 @@ References:
     [1]: https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
 """
 
+
 class RobotArm:
 
     def __init__(self, *arm_lengths, obstacles=None):
@@ -87,10 +88,8 @@ class RobotArm:
         min_dist_index = dist.index(min_dist)
         return good_angles[min_dist_index], min_dist
 
-
     def ik_fmin_search(self, target, thetas_guess, max_calls=100):
         return optimize.fmin(self.ik_grid_search, 1)
-
 
     def get_collision_score(self, thetas):
         lin = self.get_links(thetas)
