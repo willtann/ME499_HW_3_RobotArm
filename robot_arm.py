@@ -89,7 +89,12 @@ class RobotArm:
         return good_angles[min_dist_index], min_dist
 
     def ik_fmin_search(self, target, thetas_guess, max_calls=100):
-        return optimize.fmin(self.ik_grid_search, 1)
+        def dist(theta):
+            endpoint = self.get_ee_location(thetas_guess)
+            my_dist = np.linalg.norm(endpoint - target)
+            return my_dist
+
+        return optimize.fmin(func=dist, x0=self.get_ee_location(thetas_guess), maxfun=max_calls)
 
     def get_collision_score(self, thetas):
         lin = self.get_links(thetas)
@@ -206,9 +211,9 @@ if __name__ == '__main__':
 
     # Problem 3
     print('__________Problem 3__________')
-    print(your_arm.ik_grid_search([-3.53576672 -0.524667], 7))
-    print(your_arm.ik_fmin_search([-3.53576672 -0.524667],
-                                  (3.5903916041026207, 0.0, 0.8975979010256552)))
+    print(your_arm.ik_grid_search([-3.53576672, - 0.524667], 7))
+    print(your_arm.ik_fmin_search(target=[-3.53576672, - 0.524667],
+                                  thetas_guess=(3.5903916041026207, 0.0, 0.8975979010256552)))
     # RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
 
     # Example of initializing a 3-link robot arm
