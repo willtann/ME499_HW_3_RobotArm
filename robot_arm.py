@@ -82,9 +82,10 @@ class RobotArm:
                 good_angles.append(angle)
                 # print(good_angles)
                 output = (good_angles, np.linalg.norm(endpoint - target))
-        # indexes = np.argsort(dist_end)
-        # ordered_angles = good_angles[indexes]
-        return output
+                # indexes = np.argsort(dist_end)
+                # ordered_angles = good_angles[indexes]
+            return output
+
 
 
     def ik_fmin_search(self, target, thetas_guess, max_calls=100):
@@ -203,11 +204,11 @@ if __name__ == '__main__':
     # Problem 2
     print('__________Problem 2__________')
     your_arm = RobotArm(2, 1, 2, obstacles=[VerticalWall(3.2)])
-    your_arm.plot_robot_state([0.2, 0.4, 0.6], target=[1.5, 1.5])
+    your_arm.plot_robot_state([0.2, 0.4, 0.6], target=[1.5, 1.5], filename='Testing.png')
 
     # Problem 3
     print('__________Problem 3__________')
-    print(your_arm.ik_grid_search(7, 10))
+    # print(your_arm.ik_grid_search(7, 10))
     # RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
 
     # Example of initializing a 3-link robot arm
