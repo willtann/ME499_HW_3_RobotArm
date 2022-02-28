@@ -94,10 +94,10 @@ class RobotArm:
             my_dist = np.linalg.norm(endpoint - target)
             return my_dist
 
-        min_thetas = optimize.fmin(func=dist, x0=thetas_guess, maxfun=max_calls)
+        min_thetas = optimize.fmin(func=dist, x0=thetas_guess, maxfun=max_calls, full_output=True)
         min_dist = dist(min_thetas)
-        return (min_thetas[0], min_thetas[1] ,min_thetas[2]), min_dist, 15
-
+        # return (min_thetas[0], min_thetas[1], min_thetas[2]), min_dist, min_thetas[3]
+        return ((min_thetas[0])[0], (min_thetas[0])[1], (min_thetas[0])[2]), min_dist, min_thetas[3]
 
 
     def get_collision_score(self, thetas):
@@ -218,7 +218,8 @@ if __name__ == '__main__':
     print(your_arm.ik_grid_search([-3.53576672, - 0.524667], 7))
     print(your_arm.ik_fmin_search(target=[-3.53576672, - 0.524667],
                                   thetas_guess=(3.5903916041026207, 0.0, 0.8975979010256552)))
-    # RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
+
+    RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
 
     # Example of initializing a 3-link robot arm
     # arm = RobotArm(1.2, 0.8, 0.5, obstacles=[VerticalWall(1.2)])
