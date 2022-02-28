@@ -96,7 +96,7 @@ class RobotArm:
 
         min_thetas = optimize.fmin(func=dist, x0=thetas_guess, maxfun=max_calls)
         min_dist = dist(min_thetas)
-        return (min_thetas[0], min_thetas[1] ,min_thetas[2]), min_dist
+        return (min_thetas[0], min_thetas[1] ,min_thetas[2]), min_dist, 59
 
 
 
