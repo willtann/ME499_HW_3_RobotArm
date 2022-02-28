@@ -80,14 +80,11 @@ class RobotArm:
                 endpoint = self.get_ee_location(angle)
                 my_dist = np.linalg.norm(endpoint - target)
                 dist.append(my_dist)
-
                 # This orientations' link angles
                 good_angles.append(angle)
 
-                min_dist = np.min(dist)
-                min_dist_index = dist.index(min_dist)
-                # print(min_dist_index)
-
+        min_dist = np.min(dist)
+        min_dist_index = dist.index(min_dist)
         return good_angles[min_dist_index], min_dist
 
 
