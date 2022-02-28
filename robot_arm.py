@@ -80,12 +80,14 @@ class RobotArm:
                 dist_end.append(np.linalg.norm(endpoint - target))
                 # print(dist_end)
                 good_angles.append(angle)
-                # print(good_angles)
-                output = (str(good_angles)[1:-1], np.linalg.norm(endpoint - target))
-                # indexes = np.argsort(dist_end)
-                # ordered_angles = good_angles[indexes]
-                return str(output)
 
+                # print(good_angles)
+                one = str(good_angles)[1:-1]
+                print(type(one))
+                two = np.linalg.norm(endpoint - target)
+                print(type(two))
+
+                return ' '.join(map(str, (one, two)))
 
 
     def ik_fmin_search(self, target, thetas_guess, max_calls=100):
