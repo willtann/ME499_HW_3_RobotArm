@@ -88,7 +88,7 @@ class RobotArm:
         min_dist_index = dist.index(min_dist)
         return good_angles[min_dist_index], min_dist
 
-    def ik_fmin_search(self, target, thetas_guess, max_calls=100)
+    def ik_fmin_search(self, target, thetas_guess, max_calls=100):
         dist = lambda thetas: np.linalg.norm(self.get_ee_location(thetas) - target)
         min_thetas = optimize.fmin(func=dist, x0=thetas_guess, maxfun=max_calls, full_output=True)
         return ((min_thetas[0])[0], (min_thetas[0])[1], (min_thetas[0])[2]), min_thetas[1], min_thetas[3]
