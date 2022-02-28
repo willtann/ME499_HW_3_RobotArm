@@ -189,26 +189,52 @@ class VerticalWall:
 
 
 if __name__ == '__main__':
-    # Problem 1.1
-    print('__________Problem 1.1__________')
-    my_link = Link((1.1, 5.0), (3.0, 3.3))
-    print('my_link (', my_link.start[0], ',', my_link.end[0], ')')
-    print('Vertical wall at x=2.1... collision = ', my_link.check_wall_collision(VerticalWall(2.1)))
-    print('Vertical wall at x=-0.3... collision = ', my_link.check_wall_collision(VerticalWall(-0.3)))
+    # # Problem 1.1
+    # print('__________Problem 1.1__________')
+    # my_link = Link((1.1, 5.0), (3.0, 3.3))
+    # print('my_link (', my_link.start[0], ',', my_link.end[0], ')')
+    # print('Vertical wall at x=2.1... collision = ', my_link.check_wall_collision(VerticalWall(2.1)))
+    # print('Vertical wall at x=-0.3... collision = ', my_link.check_wall_collision(VerticalWall(-0.3)))
+    #
+    # # Problem 1.2
+    # print('__________Problem 1.2__________')
+    # my_arm = RobotArm(1, 1, 1, obstacles=[VerticalWall(1.5)])
+    # print('Number of collisions', my_arm.get_collision_score([np.pi/2, 0, 0]))
+    # print('Number of collisions', my_arm.get_collision_score([0, 0, np.pi]))
+    #
+    # # Problem 2
+    # print('__________Problem 2__________')
+    # your_arm = RobotArm(2, 1, 2, obstacles=[VerticalWall(3.2)])
+    # your_arm.plot_robot_state([0.2, 0.4, 0.6], target=[1.5, 1.5])
+    #
+    # # Problem 3
+    # print('__________Problem 3.1__________')
+    # print(your_arm.ik_grid_search([-3.53576672, - 0.524667], 7))
+    #
+    # print('__________Problem 3.2__________')
+    # print(your_arm.ik_fmin_search(target=[-3.53576672, - 0.524667],
+    #                               thetas_guess=(3.5903916041026207, 0.0, 0.8975979010256552)))
 
-    # Problem 1.2
-    print('__________Problem 1.2__________')
-    my_arm = RobotArm(1, 1, 1, obstacles=[VerticalWall(1.5)])
-    print('Number of collisions', my_arm.get_collision_score([np.pi/2, 0, 0]))
-    print('Number of collisions', my_arm.get_collision_score([0, 0, np.pi]))
-
-    # Problem 2
-    print('__________Problem 2__________')
-    your_arm = RobotArm(2, 1, 2, obstacles=[VerticalWall(3.2)])
-    your_arm.plot_robot_state([0.2, 0.4, 0.6], target=[1.5, 1.5])
-
-    # Problem 3
-    print('__________Problem 3__________')
-    print(your_arm.ik_grid_search([-3.53576672, - 0.524667], 7))
-    print(your_arm.ik_fmin_search(target=[-3.53576672, - 0.524667],
-                                  thetas_guess=(3.5903916041026207, 0.0, 0.8975979010256552)))
+    print('__________Problem 3.3__________')
+    m_c = np.arange(0, 10000, 5)
+    print(m_c)
+    target = [-1.5, 1.5]
+    init = [0, 0, 0]
+    final_arm = RobotArm(2, 1, 2)
+    xx = []
+    yy = []
+    enough = False
+    for c, call in enumerate(m_c):
+        if not enough:
+            my_turn = final_arm.ik_fmin_search(target=target, thetas_guess=init, max_calls=m_c[c])
+            yy.append(my_turn[1])
+            xx.append(my_turn[2])
+            print(xx)
+            print(yy)
+            if my_turn[2] < m_c[c]:
+                enough = True
+                final_arm.plot_robot_state(thetas=([my_turn[0][0], my_turn[0][1], my_turn[0][2]])
+                                           ,target=target, filename='IK_Trial.png')
+                plt.scatter(yy, xx)
+                plt.show()
+                print([my_turn[0][0], my_turn[0][1], my_turn[0][2]])
