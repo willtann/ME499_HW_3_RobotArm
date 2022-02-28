@@ -70,24 +70,17 @@ class RobotArm:
         n_searched = intervals ** num_links  # Number of points searched
         angles = np.linspace(0, 2*np.pi, num=intervals, endpoint=False)  # [1]
         angles = itertools.product(angles, repeat=num_links)
-        angles = list(angles)
-        dist_end = []
+        # angles = list(angles)
+        dist = []
         good_angles = []
 
         for a, angle in enumerate(angles):  # Iterate through every set of angles
             if not self.get_collision_score(angle):  # If no collision
                 endpoint = self.get_ee_location(angle)
-                dist_end.append(np.linalg.norm(endpoint - target))
-                # print(dist_end)
+                dist.append(np.linalg.norm(endpoint - target))
                 good_angles.append(angle)
 
-                # print(good_angles)
-                one = str(good_angles)[1:-1]
-                print(type(one))
-                two = np.linalg.norm(endpoint - target)
-                print(type(two))
-
-                return ' '.join(map(str, (one, two)))
+                return angle, np.linalg.norm(endpoint - target)
 
 
     def ik_fmin_search(self, target, thetas_guess, max_calls=100):
