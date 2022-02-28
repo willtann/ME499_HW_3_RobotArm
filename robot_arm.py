@@ -212,24 +212,3 @@ if __name__ == '__main__':
     print(your_arm.ik_grid_search([-3.53576672, - 0.524667], 7))
     print(your_arm.ik_fmin_search(target=[-3.53576672, - 0.524667],
                                   thetas_guess=(3.5903916041026207, 0.0, 0.8975979010256552)))
-
-    # RobotArm(1, 4, 2, obstacles=[VerticalWall(-0.5), VerticalWall(1.0)])
-
-    # Example of initializing a 3-link robot arm
-    # arm = RobotArm(1.2, 0.8, 0.5, obstacles=[VerticalWall(1.2)])
-    # print('Robot Arm', arm)
-
-    # Get the end-effector position of the arm for a given configuration
-    # thetas = [np.pi / 4, np.pi / 2, -np.pi / 4]
-    # thetas = [np.pi / 2, 0, 0]  # Problem 1.2.1
-    # thetas = [0, 0, np.pi]  # Problem 1.2.2
-    # pos = arm.get_ee_location(thetas)
-    # print('End effector is at: ({:.3f}, {:.3f})'.format(*pos))
-
-    # Get each of the links for the robot arm, and print their start and end points
-    # links = arm.get_links(thetas)
-    #
-    # for i, link in enumerate(links):
-    #     print('Link {}:'.format(i))
-    #     print('\tStart: ({:.3f}, {:.3f})'.format(*link.start))
-    #     print('\tEnd: ({:.3f}, {:.3f})'.format(*link.end))
